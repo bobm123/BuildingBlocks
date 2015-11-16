@@ -14,17 +14,22 @@ var app = require('./app');
 describe('Requests to the root path', function() {
 
   it('Returns a 200 status code', function(done) {
-
     //uses function chaining to setup a list of test steps
     request(app)
       .get('/')
       .expect(200, done);
-/* done); (2nd arg above) is short for this:
-      .end(function(error) {
-        if(error) throw error;
-        done();
-      });
-*/
+  });
+
+  it('Returns HTML', function(done) {
+    request(app)
+      .get('/')
+      .expect('Content-Type', /html/, done);
+  });
+
+  it('Returns index file with cities', function(done) {
+    request(app)
+      .get('/')
+      .expect(/cities/i, done);
   });
 
 });
